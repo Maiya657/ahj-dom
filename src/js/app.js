@@ -1,40 +1,7 @@
-import image from "../img/goblin.png";
+import { GameController } from "./gameController.js";
+import { GameField } from "./gameField.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-  const div = document.createElement("div");
-  div.className = "field-container";
-  document.body.append(div);
+const gameField = new GameField("body", 16);
+const game = new GameController(gameField);
 
-  for (let i = 0; i < 16; i++) {
-    const item = document.createElement("div");
-    item.className = "field-item";
-    div.append(item);
-  }
-
-  const fieldItems = Array.from(document.querySelectorAll(".field-item"));
-  const img = document.createElement("img");
-  img.src = image;
-
-  let currentIndex = 0;
-
-  function getItem() {
-    let generateIndex = currentIndex;
-
-    while (true) {
-      generateIndex = Math.floor(1 + Math.random() * fieldItems.length - 1);
-      if (currentIndex !== generateIndex) {
-        currentIndex = generateIndex;
-        return fieldItems[currentIndex];
-      }
-    }
-  }
-
-  function activateField() {
-    const activeItem = getItem();
-    activeItem.append(img);
-  }
-
-  activateField();
-
-  setInterval(activateField, 1000);
-});
+game.start();
